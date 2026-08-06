@@ -1,3 +1,33 @@
+# Blender Add-on
+# Contributor(s): Lok Wong @wonglok831 at x.com and @wonglok at github.com
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTIBILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+bl_info = {
+    "name": "B3 Addon",
+    "description": "Blender and ThreeJS Addon",
+    "author": "Lok Wong",
+    "version": (1, 0),
+    "blender": (5, 2, 0),
+    "location": "Properties > Render > B3 Addon",
+    "warning": "", # used for warning icon and text in add-ons panel
+    "wiki_url": "http://b3.inter-site.com",
+    "tracker_url": "http://b3.inter-site.com",
+    "support": "COMMUNITY",
+    "category": "Render"
+}
+
 import bpy
 import json
 import array
