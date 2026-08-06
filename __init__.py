@@ -1203,9 +1203,6 @@ def start_server():
 
     with _lock:
         _state["error"] = ""
-        # Sync camera toggle from scene property on start
-        cam_sync = getattr(bpy.context.scene, "blendertalk_camera_sync", True)
-        _state["camera_sync_enabled"] = cam_sync
 
     port = getattr(bpy.context.scene, "blendertalk_port", SERVER_PORT_DEFAULT)
 
@@ -1301,8 +1298,6 @@ class BLENDERTALK_PT_panel(bpy.types.Panel):
             server = _state["server"]
             loop = _state["loop"]
             thread = _state["thread"]
-            cam_sync = _state["camera_sync_enabled"]
-
         configured_port = scene.blendertalk_port
 
         # Health check: if _state says "running" but the thread/loop died,
@@ -1339,14 +1334,6 @@ class BLENDERTALK_PT_panel(bpy.types.Panel):
             layout.label(text="○  STOPPED", icon='CANCEL')
 
         layout.separator()
-
-        # Camera sync toggle
-        row = layout.row(align=True)
-        row.label(text="Camera Sync")
-        row.prop(scene, "blendertalk_camera_sync", text="")
-        if scene.blendertalk_camera_sync != cam_sync:
-            with _lock:
-                _state["camera_sync_enabled"] = scene.blendertalk_camera_sync
 
         # Error message
         if error:
@@ -1385,7 +1372,7 @@ def register():
             pass  # wasn't registered — fine
 
     # Remove old scene properties if they exist (e.g. from a prior version)
-    for prop in ("blendertalk_port", "blendertalk_camera_sync"):
+    for prop in ("blendertalk_port",):
         try:
             delattr(bpy.types.Scene, prop)
         except (AttributeError, KeyError):
@@ -1403,13 +1390,6 @@ def register():
         max=65535,
     )
 
-    # Scene property for camera sync toggle
-    bpy.types.Scene.blendertalk_camera_sync = bpy.props.BoolProperty(
-        name="Sync Camera",
-        description="Send the 3D viewport camera to connected web viewers",
-        default=True,
-    )
-
     print("[BlenderTalk] Panel registered — open the 3D View sidebar (N) → BlenderTalk")
 
 
@@ -1419,7 +1399,6 @@ def unregister():
         bpy.utils.unregister_class(cls)
 
     del bpy.types.Scene.blendertalk_port
-    del bpy.types.Scene.blendertalk_camera_sync
 
     print("[BlenderTalk] Unregistered")
 
