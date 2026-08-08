@@ -1392,6 +1392,9 @@ def register():
 
     print("[BlenderTalk] Panel registered — open the 3D View sidebar (N) → BlenderTalk")
 
+    # Auto-start the server on add-on registration
+    start_server()
+
 
 def unregister():
     stop_server()
@@ -1413,5 +1416,5 @@ if __name__ == "__main__":
     except Exception:
         pass
     register()
-    # Server must be started manually via the panel button
-    print("[BlenderTalk] Ready — press 'Start Server' in the BlenderTalk panel")
+    # Server auto-starts via register()
+    print("[BlenderTalk] Ready — server auto-starting…")
